@@ -57,6 +57,8 @@ private:
     void fillCameraModesComboBox();
     void fillScreenModesComboBox();
     void fillAudioQualityComboBox();
+    void fillCaptureModeComboBox();
+    void updateCaptureModeUI(int mode);
     int searchPreferredIndex();
 
     void createVideoSurface();
@@ -73,6 +75,7 @@ private slots:
     void on_microphoneSlider_valueChanged(int value);
     void on_audioThresholdSlider_valueChanged(int value);
     void on_audioQualityComboBox_currentIndexChanged(int index);
+    void on_inModeComboBox_currentIndexChanged(int index);
 
     // camera
     void on_videoDevCombobox_currentIndexChanged(int index);
