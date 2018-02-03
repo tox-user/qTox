@@ -268,7 +268,15 @@ void Settings::loadGlobal()
         audioThreshold = s.value("audioThreshold", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
         audioCaptureMode = s.value("audioCaptureMode", 0).toInt();
-        pttShortcutKeys = s.value("pttShortcutKeys", QList<int>());
+
+        int pttShortcutKeysSize = s.beginReadArray("pttShortcutKeys");
+        for (int i = 0; i < pttShortcutKeysSize; i++) {
+            s.setArrayIndex(i);
+            const int key = s.value("pttKey" + QString::number(i), 0).toInt();
+            pttShortcutKeys << key;
+        }
+        s.endArray();
+
         audioBitrate = s.value("audioBitrate", 64).toInt();
         enableBackend2 = false;
         #ifdef USE_FILTERAUDIO
@@ -574,7 +582,14 @@ void Settings::saveGlobal()
         s.setValue("audioThreshold", audioThreshold);
         s.setValue("outVolume", outVolume);
         s.setValue("audioCaptureMode", audioCaptureMode);
-        s.setValue("pttShortcutKeys", pttShortcutKeys);
+
+	s.beginWriteArray("pttShortcutKeys", pttShortcutKeys.size());
+        for (int i = 0; i < pttShortcutKeys.size(); i++) {
+            s.setArrayIndex(i);
+            s.setValue("pttKey" + QString::number(i), pttShortcutKeys[i]);
+        }
+        s.endArray();
+
         s.setValue("audioBitrate", audioBitrate);
         s.setValue("enableBackend2", enableBackend2);
     }
