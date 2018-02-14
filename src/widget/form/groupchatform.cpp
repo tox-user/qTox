@@ -37,10 +37,12 @@
 #include "src/persistence/settings.h"
 
 #include <QDragEnterEvent>
+#include <QDebug>
 #include <QMimeData>
 #include <QRegularExpression>
 #include <QTimer>
 #include <QToolButton>
+#include <QWidgetAction>
 
 /**
  * @brief Edit name for correct representation if it is needed
@@ -227,14 +229,46 @@ void GroupChatForm::updateUserNames()
             label->setToolTip(fullName);
         }
         label->setTextFormat(Qt::PlainText);
+	label->setContextMenuPolicy(Qt::CustomContextMenu);
 
-        const Settings& s = Settings::getInstance();
+        Settings& s = Settings::getInstance();
         const Core* core = Core::getInstance();
         const ToxPk peerPk = core->getGroupPeerPk(group->getId(), peerNumber);
 
+        QStringList blackList = s.getBlackList();
+        const bool isPeerBlocked = blackList.contains(peerPk.toString());
+        connect(label, &QLabel::customContextMenuRequested, [&](const QPoint& point) { 
+            QMenu* contextMenu = new QMenu(this);
+
+            const QPoint pos = label->mapToGlobal(point);
+            const QString muteString = tr("mute");
+            const QString unmuteString = tr("unmute");
+            const QAction* toggleMuteAction;
+
+            if (isPeerBlocked) {
+                toggleMuteAction = contextMenu->addAction(unmuteString);
+            } else {
+                toggleMuteAction = contextMenu->addAction(muteString);
+            }
+
+            const QAction* selectedItem = contextMenu->exec(pos);
+            if (selectedItem == toggleMuteAction) {
+                if (isPeerBlocked) {
+                    int index = blackList.indexOf(peerPk.toString());
+                    if (index != -1) {
+                        blackList.removeAt(index);
+                    }
+                } else {
+                    blackList << peerPk.toString();
+                }
+
+                s.setBlackList(blackList);
+            }
+        });
+
         if (group->isSelfPeerNumber(peerNumber)) {
             label->setStyleSheet(QStringLiteral("QLabel {color : green;}"));
-	} else if (s.getBlackList().contains(peerPk.toString())) {
+	} else if (isPeerBlocked) {
             label->setStyleSheet(QStringLiteral("QLabel {color : darkRed;}"));
 	} else if (netcam != nullptr) {
             static_cast<GroupNetCamView*>(netcam)->addPeer(peerNumber, fullName);
