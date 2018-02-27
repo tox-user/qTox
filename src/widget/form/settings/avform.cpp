@@ -560,7 +560,7 @@ void AVForm::showPttShortcutKeys()
         keyString += QString::number(keys[i]) + "+";
     }
 
-    keyString.replace(QRegExp("++$"), "");
+    keyString.replace(QRegExp("[+]+$"), "");
     pushToTalkShortcutInput->setText(keyString);
     pushToTalkShortcutInput->blockSignals(previouslyBlocked);
 }
