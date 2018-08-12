@@ -1,3 +1,7 @@
+* {
+    background-color: #333333
+}
+
 QToolTip
 {
     /* explicit border width is required https://bugreports.qt.io/browse/QTBUG-41313 */

@@ -234,7 +234,6 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     sel.format.setBackground(selectionColor.lighter(selectionHasFocus ? 100 : 160));
     sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
     ctx.selections.append(sel);
-    ctx.palette.setColor(QPalette::Text, color);
 
     // draw text
     doc->documentLayout()->draw(painter, ctx);

@@ -65,7 +65,6 @@ ChatLog::ChatLog(QWidget* parent)
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(MinimalViewportUpdate);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 
     // The selection rect for multi-line selection
     selGraphItem = scene->addRect(0, 0, 0, 0, selectionRectColor.darker(120), selectionRectColor);

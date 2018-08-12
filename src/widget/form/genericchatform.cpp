@@ -139,6 +139,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     chatWidget = new ChatLog(this);
+    chatWidget->setStyleSheet(Style::getStylesheet("chatForm/chatlog.css"));
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
     searchForm->hide();
 

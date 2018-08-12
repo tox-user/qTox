@@ -1,13 +1,13 @@
-QLineEdit
+QLineEdit 
 {
-    color: @black;
-    background: white;
+    color: #ccc;
+    background: #333333;
     border: 0px;
 }
 
-#nameLabel
+#nameLabel 
 {
-    color: @black;
+    color: #ccc;
     font: @mediumBold;
     font-size:12px;
 }

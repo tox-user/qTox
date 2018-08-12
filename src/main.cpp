@@ -167,6 +167,28 @@ int main(int argc, char* argv[])
     a->setOrganizationName("Tox");
     a->setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
+    QPalette darkPalette;
+    darkPalette.setColor(QPalette::Window, QColor(53,53,53));
+    darkPalette.setColor(QPalette::WindowText, QColor("#d6d6d6"));
+    darkPalette.setColor(QPalette::Base, QColor(25,25,25));
+    darkPalette.setColor(QPalette::AlternateBase, QColor(40,40,40));
+    darkPalette.setColor(QPalette::ToolTipBase, QColor("#d6d6d6"));
+    darkPalette.setColor(QPalette::ToolTipText, QColor("#d6d6d6"));
+    darkPalette.setColor(QPalette::Text, QColor("#d6d6d6"));
+
+    darkPalette.setColor(QPalette::Button, QColor("#6bc260"));
+    darkPalette.setColor(QPalette::Light, QColor("#79c76f"));
+    darkPalette.setColor(QPalette::Dark, QColor("#51b244"));
+
+    darkPalette.setColor(QPalette::ButtonText, QColor("#d6d6d6"));
+    darkPalette.setColor(QPalette::BrightText, Qt::red);
+    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+
+    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+
+    a->setPalette(darkPalette);
+
     // Install Unicode 6.1 supporting font
     // Keep this as close to the beginning of `main()` as possible, otherwise
     // on systems that have poor support for Unicode qTox will look bad.
